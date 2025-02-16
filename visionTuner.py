@@ -112,10 +112,11 @@ def horizontal_vertical_mirroring():
     # create new empty image with same dimensions
     new_img = np.zeros((base_height, base_width, 3), np.uint8) # 3 for RGB, np.uint8 for 8-bit unsigned integer values (0-255)
 
-    # algorithm
+    # horizontal and vertical mirroring algorithm
     for i in range(base_height):
+        mirrored_i = base_height - i - 1 # precompute mirrored i before second loop to avoid calculating it for each pixel (it is now calculated only the number of rows their are)
         for j in range(base_width):
-            new_img[i, j] = base_img[base_height - i - 1, base_width - j - 1]
+            new_img[i, j] = base_img[mirrored_i, base_width - j - 1] # set pixel of new image to mirrored pixel of base image
 
     # save image
     new_img_path = input("path to save resized image (path/to/new_img.ext): ")
@@ -124,33 +125,6 @@ def horizontal_vertical_mirroring():
     cv2.destroyAllWindows()
 
     print("horizontally and vertically mirrored " + base_img_path + " as " + new_img_path)
-
-def vertical_mirroring():
-    base_img_path = get_user_base_image_path()
-
-    base_img = cv2.imread(base_img_path) # get base image
-
-    # get base image dimensions
-    base_height = base_img.shape[0] # height
-    base_width = base_img.shape[1] # width
-
-    print("vertically mirroring image")
-
-    # create new empty image with same dimensions
-    new_img = np.zeros((base_height, base_width, 3), np.uint8) # 3 for RGB, np.uint8 for 8-bit unsigned integer values (0-255)
-
-    # algorithm
-    for i in range(base_height):
-        for j in range(base_width):
-            new_img[i, j] = base_img[i, base_width - j - 1]
-
-    # save image
-    new_img_path = input("path to save resized image (path/to/new_img.ext): ")
-    new_img = cv2.imwrite(new_img_path, new_img)
-
-    cv2.destroyAllWindows()
-
-    print("vertically mirrored " + base_img_path + " as " + new_img_path)
 
 def horizontal_mirroring():
     base_img_path = get_user_base_image_path()
@@ -166,10 +140,11 @@ def horizontal_mirroring():
     # create new empty image with same dimensions
     new_img = np.zeros((base_height, base_width, 3), np.uint8) # 3 for RGB, np.uint8 for 8-bit unsigned integer values (0-255)
 
-    # algorithm
+    # horizontal mirroring algorithm
     for i in range(base_height):
         for j in range(base_width):
-            new_img[i, j] = base_img[base_height - i - 1, j]
+            # precomputing mirrired j can't be done because this is the last loop
+            new_img[i, j] = base_img[i, base_width - j - 1] # set pixel of new image to mirrored pixel of base image
 
     # save image
     new_img_path = input("path to save resized image (path/to/new_img.ext): ")
@@ -178,6 +153,35 @@ def horizontal_mirroring():
     cv2.destroyAllWindows()
 
     print("horizontally mirrored " + base_img_path + " as " + new_img_path)
+
+def vertical_mirroring():
+    base_img_path = get_user_base_image_path()
+
+    base_img = cv2.imread(base_img_path) # get base image
+
+    # get base image dimensions
+    base_height = base_img.shape[0] # height
+    base_width = base_img.shape[1] # width
+
+    print("vertically mirroring image")
+
+    # create new empty image with same dimensions
+    new_img = np.zeros((base_height, base_width, 3), np.uint8) # 3 for RGB, np.uint8 for 8-bit unsigned integer values (0-255)
+
+    # vertical mirroring algorithm
+    for i in range(base_height):
+        mirrored_i = base_height - i -1 # precompute mirrored i before second loop to avoid calculating it for each pixel (it is now calculated only the number of rows their are)
+        for j in range(base_width):
+            # precomputing mirrired j can't be done because this is the last loop
+            new_img[i, j] = base_img[mirrored_i, j] # set pixel of new image to mirrored pixel of base image
+
+    # save image
+    new_img_path = input("path to save resized image (path/to/new_img.ext): ")
+    new_img = cv2.imwrite(new_img_path, new_img)
+
+    cv2.destroyAllWindows()
+
+    print("vertically mirrored " + base_img_path + " as " + new_img_path)
 
 def mirror_menu():
     print('0. exit')
