@@ -2,25 +2,7 @@ import cv2
 import numpy as np
 
 def resize_nearest_neighbor():
-    while True:
-        data_is_valid = False
-
-        base_img_path = input("path to base image (path/to/base_img.ext): ") # path to base image
-
-        # check validity of base image path
-        if cv2.imread(base_img_path) is None:
-            print("invalid base image path")
-        else:
-            scale_factor = float(input("scale factor: ")) # by how much to scale the image
-            
-            if scale_factor <= 0:
-                print("invalid scale factor")
-            else:
-                data_is_valid = True
-                print("resizing" + base_img_path + " by " + str(scale_factor))
-
-        if data_is_valid:
-            break
+    base_img_path, scale_factor = get_resize_user_input()
 
     base_img = cv2.imread(base_img_path) # get base image
 
@@ -60,6 +42,27 @@ def resize_bicubic():
 
 def resize_lanczos():
     print("not implemented")
+
+def get_resize_user_input():
+    while True:
+        data_is_valid = False
+
+        base_img_path = input("path to base image (path/to/base_img.ext): ") # path to base image
+
+        # check validity of base image path
+        if cv2.imread(base_img_path) is None:
+            print("invalid base image path")
+        else:
+            scale_factor = float(input("scale factor: ")) # by how much to scale the image
+            
+            if scale_factor <= 0:
+                print("invalid scale factor")
+            else:
+                data_is_valid = True
+                print("resizing" + base_img_path + " by " + str(scale_factor))
+
+        if data_is_valid:
+            return base_img_path, scale_factor
 
 def resize():
     print("what algorithm do you want to use?")
