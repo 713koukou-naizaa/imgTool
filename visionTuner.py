@@ -64,7 +64,7 @@ def get_resize_user_input():
         if data_is_valid:
             return base_img_path, scale_factor
 
-def resize():
+def resize_menu():
     print("what algorithm do you want to use?")
     print("0. exit")
     print("1. nearest neighbor (fast, duplicates pixels)")
@@ -87,7 +87,7 @@ def resize():
             resize_lanczos()
         case _:
             print("invalid choice, please write one of the followings: 0, 1, 2, 3, 4, 5")
-            resize()
+            resize_menu()
 
 def mainloop():
     print("what do you want to do?")
@@ -100,7 +100,7 @@ def mainloop():
         case 0:
             exit()
         case 1:
-            resize()
+            resize_menu()
         case _:
             print("invalid choce, please write one of the followings: 0, 1")
             mainloop()
