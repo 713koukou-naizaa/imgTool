@@ -52,22 +52,60 @@ def resize_nearest_neighbor():
 
     print("resized " + base_img_path + " (" + str(base_width) + "x" + str(base_height) + ") as " + new_img_path + " (" + str(new_width) + "x" + str(new_height) + ")")
 
+def resize_bilinear():
+    print("not implemented")
 
+def resize_bicubic():
+    print("not implemented")
 
-def mainloop():
-    print("1. resize nearest neighbor")
-    print("2. exit")
+def resize_lanczos():
+    print("not implemented")
+
+def resize():
+    print("what algorithm do you want to use?")
+    print("0. exit")
+    print("1. nearest neighbor (fast, duplicates pixels)")
+    print("2. bilinear interpolation (smoother, averages nearby pixels)")
+    print("3. bicubic interpolation (quality, uses weighted averages)")
+    print("4. lanczos resampling (high quality, preserves details)")
 
     choice = int(input("choice: "))
 
     match choice:
+        case 0:
+            exit()
         case 1:
             resize_nearest_neighbor()
         case 2:
+            resize_bilinear()
+        case 3:
+            resize_bicubic()
+        case 4:
+            resize_lanczos()
+        case _:
+            print("invalid choice, please write one of the followings: 0, 1, 2, 3, 4, 5")
+            resize()
+
+def mainloop():
+    print("what do you want to do?")
+    print("0. exit")
+    print("1. resize")
+
+    choice = int(input("choice: "))
+
+    match choice:
+        case 0:
             exit()
+        case 1:
+            resize()
+        case _:
+            print("invalid choce, please write one of the followings: 0, 1")
+            mainloop()
+
 
 def main():
     mainloop()
+
 
 
 if __name__ == "__main__":
