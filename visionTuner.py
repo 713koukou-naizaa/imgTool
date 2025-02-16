@@ -35,14 +35,14 @@ def resize_nearest_neighbor():
     # create new empty image with new dimensions
     new_img = np.zeros((new_height, new_width, 3), np.uint8) # 3 for RGB, np.uint8 for 8-bit unsigned integer values (0-255)
 
-    # iterate over rows and columns
+    # precompute mapping from new image coordinates to base image coordinates to avoid computing them each time in the nested loops
+    # pixel at (i, j) in new image corresponds to pixel at (i/scale_factor, j/scale_factor) in base image
+    base_row_indices = [int(i/scale_factor) for i in range(new_height)]
+    base_col_indices = [int(j/scale_factor) for j in range(new_width)]
+    
     for i in range(new_height):
         for j in range(new_width):
-            # find nearest neighbor in base image
-            # pixel at (i, j) in new image corresponds to pixel at (i/scale_factor, j/scale_factor) in base image
-            orig_x = int(i / scale_factor)
-            orig_y = int(j / scale_factor)
-            new_img[i, j] = base_img[orig_x, orig_y] # set new image pixel to base image pixel
+            new_img[i, j] = base_img[base_row_indices[i], base_col_indices[j]] # set new image pixel to base image pixel
 
     # save image
     new_img_path = input("path to save resized image (path/to/new_img.ext): ")
